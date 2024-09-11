@@ -1,6 +1,7 @@
 from selenium import webdriver
 from time import sleep
 
+
 for i in range(100):
     browser = webdriver.Chrome()
     # browser.maximize_window()
