@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-
+from time import sleep
 
 Site_url = 'https://hrm.techmarcos.com/web/index.php/auth/login'
 UserName = 'GautamSingh'
@@ -44,9 +44,10 @@ PunchIn_out_tab.click()
 
 WebDriverWait(Browser,6).until(ec.invisibility_of_element((By.CSS_SELECTOR, '.oxd-form-loader')))
 
+sleep(2)
 
-WebDriverWait(Browser, 5).until(ec.element_to_be_clickable((By.XPATH , "//button[@type='submit']")))
+WebDriverWait(Browser, 5).until(ec.visibility_of_element_located((By.XPATH , "//button[@type='submit']")))
 PunchIn_out_button = Browser.find_element(By.XPATH , "//button[@type='submit']")
 PunchIn_out_button.click()
 
-# Browser.quit()
+Browser.quit()
