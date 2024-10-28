@@ -25,6 +25,7 @@ try:
     Age_button = browser.find_element(By.XPATH, '//*[@id="age-gate"]/div/div/div/div/div[2]/div[1]/button')
     Age_button.click()
     logging.info("Closed age verification pop-up.")
+
 except Exception as e:
     logging.error("An error occurred while handling the age verification pop-up: %s", e)
 
@@ -35,16 +36,18 @@ try:
     CloseEmail_pop_up = browser.find_element(By.XPATH, '//*[@id="newsletter-form"]/div/div/div[1]/div/button')
     CloseEmail_pop_up.click()
     logging.info("Email-pop is closed successfully.")
+
 except Exception as e:
-    logging.error("Not able to click on the email offer pop-up: %s", e)
+    logging.error(e, "Not able to click on the email offer pop-up")
 
 # Navigating to 'Order Online'
 try:
     order_online = browser.find_element(By.XPATH, '//*[@id="menu-item-938"]/a')
     order_online.click()
-    logging.info("Navigated to Order Online page.")
+    logging.info(" Navigated to Order Online page.")
+  
 except Exception as e:
-    logging.error("Failed to click on Order Online: %s", e)
+    logging.error(e,"Failed to click on Order Online: ")
 
 # Accessing the Cart
 try:
@@ -59,8 +62,18 @@ try:
     
     SubtotalAmount = browser.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/table/tbody/tr[1]/td/span/bdi')
     logging.info("Cart Amount is: %s", SubtotalAmount.text)
+
 except Exception as e:
     logging.error(e, "Failed to access the Cart page:", )
+
+try:
+    CheckOut = browser.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/div/a')
+    print(CheckOut)
+    CheckOut.click()
+    print('Button clicked')
+
+except Exception as e:
+    logging.error(e, "failed to find the button...")
 
 logging.info("Browser is closed")
 browser.quit()
