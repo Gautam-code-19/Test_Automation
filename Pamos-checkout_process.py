@@ -1,19 +1,12 @@
 import logging
 import threading
 import time
-import urllib3
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
-
-
-http = urllib3.PoolManager(maxsize=10, block=True)
-
-# Alternatively
-pool = urllib3.HTTPConnectionPool("google.com", maxsize=15, block=True)
 
 # Set up logging:-
 logging.basicConfig(level=logging.INFO)
@@ -41,22 +34,6 @@ def age_and_email_pop_up():
     except Exception as e:
         logging.error("An error occurred while handling the age verification pop-up: %s", e)
 
-    # try:
-    #     WebDriverWait(browser, 17).until(ec.visibility_of_element_located((By.XPATH, '//*[@id="newsletter-form"]/div/div')))
-    #     logging.info("Email pop-up is opened.")
-    #     mail_pop_up = browser.find_element(By.XPATH, '//*[@id="newsletter-form"]/div/div/div[1]/div/button')
-    #     WebDriverWait(browser, 20).until(ec.element_to_be_clickable((By.XPATH, '//*[@id="newsletter-form"]/div/div/div[1]/div/button')))
-    #     time.sleep(1)
-    #     mail_pop_up.click()
-    #     logging.info("Email-pop is closed successfully ✅.")
-    #     WebDriverWait(browser, 5).until(ec.invisibility_of_element((By.XPATH, '//*[@id="newsletter-form"]/div/div')))
-    # except Exception as e:
-    #     logging.error("An error occurred while closing the email pop-up: %s", e)
-
-
-
-# Closing the email 20% off pop-up:-
-def close_email_popup():
     try:
         WebDriverWait(browser, 17).until(ec.visibility_of_element_located((By.XPATH, '//*[@id="newsletter-form"]/div/div')))
         logging.info("Email pop-up is opened.")
@@ -67,9 +44,21 @@ def close_email_popup():
         logging.info("Email-pop is closed successfully ✅.")
         WebDriverWait(browser, 5).until(ec.invisibility_of_element((By.XPATH, '//*[@id="newsletter-form"]/div/div')))
     except Exception as e:
-        logging.error("An error occurred while closing the email pop-up: %s", e)
+        logging.error("🩻 An error occurred while closing the email pop-up: %s", e)
 
 
+# def close_email_popup():
+#     try:
+#         WebDriverWait(browser, 17).until(ec.visibility_of_element_located((By.XPATH, '//*[@id="newsletter-form"]/div/div')))
+#         logging.info("Email pop-up is opened.")
+#         mail_pop_up = browser.find_element(By.XPATH, '//*[@id="newsletter-form"]/div/div/div[1]/div/button')
+#         WebDriverWait(browser, 20).until(ec.element_to_be_clickable((By.XPATH, '//*[@id="newsletter-form"]/div/div/div[1]/div/button')))
+#         time.sleep(1)
+#         mail_pop_up.click()
+#         logging.info("Email-pop is closed successfully ✅.")
+#         WebDriverWait(browser, 5).until(ec.invisibility_of_element((By.XPATH, '//*[@id="newsletter-form"]/div/div')))
+#     except Exception as e:
+#         logging.error("An error occurred while closing the email pop-up: %s", e)
 
 def add_to_cart():
     time.sleep(1)
@@ -87,7 +76,7 @@ def add_to_cart():
         subtotal_amount_table = browser.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/table')
         print(subtotal_amount_table.text)
     except Exception as e:
-        logging.error( "Failed to access the Cart page:",e )
+        logging.error( "🩻 Failed to access the Cart page:",e )
 
 
 def checkout_start():
@@ -97,16 +86,13 @@ def checkout_start():
         WebDriverWait(browser, 10).until(ec.element_to_be_clickable((By.XPATH, '//*[@id="wrap"]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/div/a')))
         checkout.click()
         logging.info('Checkout Button clicked 😊')
-
     except Exception as e:
-        logging.error( "failed to find the button...",e)
+        logging.error( "failed to find the button...🩻",e)
 
 def checkout_step_1(first_name, last_name, street_address, city, zip_code, state, phone_number, email):
     # Filling the first step of checkout:-
     time.sleep(1)
-
     next_step_button = browser.find_element(By.XPATH, '//*[@id="action-next"]')
-
     first_name_field = browser.find_element(By.XPATH, '//*[@id="billing_first_name"]')
     last_name_field = browser.find_element(By.XPATH, '//*[@id="billing_last_name"]')
     street_address_field = browser.find_element(By.XPATH, '//*[@id="billing_address_1"]')
@@ -129,7 +115,6 @@ def checkout_step_1(first_name, last_name, street_address, city, zip_code, state
         street_address_field.send_keys(street_address)
         city_field.send_keys(city)
         zip_code_field.send_keys(zip_code)
-
         state_field.find_elements(By.TAG_NAME, "option")
         i=0
         for option in state_field.find_elements(By.TAG_NAME, "option"):
@@ -144,9 +129,8 @@ def checkout_step_1(first_name, last_name, street_address, city, zip_code, state
         logging.info("All fields filled successfully 👍")
         next_step_button.click()
         logging.info("Next step button clicked 👍")
-
     except Exception as e:
-        logging.error( "Failed to fill the fields...",e)
+        logging.error( "Failed to fill the fields...🩻",e)
 
 #chechout second step:-
 def checkout_step_2():
@@ -155,7 +139,7 @@ def checkout_step_2():
     order_review = browser.find_element(By.XPATH, '//*[@id="thwmscf-tab-panel-2"]/table')
     print('Table content',order_review.text)
     next_step_button.click()
-    logging.info("2nd step id cleared...")
+    logging.info("2nd step table is fetched...✔️")
 
 
 # filly card details and placing the order:-
@@ -169,7 +153,7 @@ def final_checkout(tc_card_number , tc_card_month , tc_card_year , tc_card_cvv):
 
     try:
         card_number.send_keys(tc_card_number)
-        logging.info("card number filled", card_number)
+        logging.info("card number filled...👍",)
     except Exception as e:
         logging.error( "Not able to fill the card number...",e)
 
@@ -182,7 +166,7 @@ def final_checkout(tc_card_number , tc_card_month , tc_card_year , tc_card_cvv):
                 option.click()
                 break
             i += 1
-        logging.info("Card number filled: {}".format(tc_card_month))
+        logging.info("Card Month filled...👍")
     except Exception as e:
         logging.error( "Not able to fill the card month...",e)
 
@@ -195,13 +179,13 @@ def final_checkout(tc_card_number , tc_card_month , tc_card_year , tc_card_cvv):
                 option.click()
                 break
             i += 1
-        logging.info("Card number filled: {}".format(tc_card_year))
+        logging.info("Card Year filled...👍")
     except Exception as e:
         logging.error( "Not able to fill the card Year...",e)
 
     try:
         card_cvv.send_keys(tc_card_cvv)
-        logging.info("card number filled", tc_card_cvv)
+        logging.info("card CVV number filled...👍")
     except Exception as e:
         logging.error( "Not able to fill the card CVV number...",e)
 
@@ -209,11 +193,10 @@ def final_checkout(tc_card_number , tc_card_month , tc_card_year , tc_card_cvv):
         browser.execute_script("arguments[0].scrollIntoView();", place_order)
         WebDriverWait(browser, 10).until(ec.element_to_be_clickable(place_order))
         place_order.click()
-        logging.info("Order Placed Successfully")
+        logging.info("Order Placed Successfully...🫡")
     except Exception as e:
         logging.error(e,"Failed to place order...")
     time.sleep(10)
-
 
 # Fetching order details:-
 def order_details():
@@ -222,15 +205,15 @@ def order_details():
         order_base_details = WebDriverWait(browser, 10).until(ec.presence_of_element_located((By.XPATH, '//*[@id="wrap"]/div[2]/div/ul')))
         print(order_base_details.text)
     except Exception as e:
-        logging.error( "Failed to find the order base details..." ,e)
+        logging.error( "Failed to find the order base details... 🩻 " ,e)
 
-    try:
-        billing_address = browser.find_element(By.XPATH,'//*[@id="wrap"]/div[2]/div/div[2]/div[2]/section/section/div[1]/h2')
-        browser.execute_script("arguments[0].scrollIntoView();", billing_address)
-        address_value = browser.find_element(By.XPATH,'//*[@id="wrap"]/div[2]/div/div[2]/div[2]/section/section/div[1]/address').text
-        print(address_value)
-    except Exception as e:
-        logging.error( "Failed to find the billing address...",e)
+    # try:
+    #     billing_address = browser.find_element(By.XPATH,'//*[@id="wrap"]/div[2]/div/div[2]/div[2]/section/section/div[1]/h2')
+    #     browser.execute_script("arguments[0].scrollIntoView();", billing_address)
+    #     address_value = browser.find_element(By.XPATH,'//*[@id="wrap"]/div[2]/div/div[2]/div[2]/section/section/div[1]/address')
+    #     print(address_value.text)
+    # except Exception as e:
+    #     logging.error( "Failed to find the billing address...",e)
 
 
 
@@ -239,8 +222,8 @@ def order_details():
 try:
     # calling all the function as we needed:-
     age_and_email_pop_up()    #call the pop funtion
-    timer_thread = threading.Timer(14, close_email_popup)
-    timer_thread.start()
+    # timer_thread = threading.Timer(14, close_email_popup)
+    # timer_thread.start()
     add_to_cart()
     checkout_start()
 
@@ -257,14 +240,13 @@ try:
     checkout_step_2()
 
     # fill the form:-
-    final_checkout(tc_card_cvv = 123,
-                   tc_card_year = 2034,
-                   tc_card_month = "Dec",
-                   tc_card_number = 4111111111111111)
+    final_checkout(tc_card_cvv = "1234",
+                   tc_card_year ="2034",
+                   tc_card_month="Dec",
+                   tc_card_number = "4111111111111111")
 
     # order details:-
     order_details()
-
 finally:
     logging.info("Browser is closed")
-    # browser.quit()
+    browser.quit()
