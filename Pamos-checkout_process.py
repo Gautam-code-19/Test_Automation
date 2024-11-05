@@ -7,16 +7,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
-
 # Set up logging:-
 logging.basicConfig(level=logging.INFO)
 
 # Initialize the Chrome browser:-
 browser = webdriver.Chrome()
-browser.maximize_window()
-logging.info("---- Window maxed ----")
-browser.get("https://qa10624.pamos.com/nationwide/")
-logging.info("Login title :-- %s", browser.title)
+# for further user
+def open_browser(url):
+    browser.maximize_window()
+    logging.info("---- Window maxed ----")
+    browser.get(url)
+    logging.info("Login title :-- %s", browser.title)
 
 
 def age_and_email_pop_up():
@@ -68,11 +69,10 @@ def add_to_cart():
         browser.execute_script("arguments[0].scrollIntoView();", product)
         WebDriverWait(browser, 10).until(ec.visibility_of_element_located((By.XPATH,'//*[@id="allTab"]/div/div[1]/div/div/a')))
         cart_button = browser.find_element(By.XPATH, '//*[@id="allTab"]/div/div[1]/div/div/a')
-        time.sleep(1)
+        time.sleep(0.5)
         cart_button.click()
         logging.info("Cart button clicked.")
         WebDriverWait(browser, 20).until(ec.title_contains("Cart - Pamos"))
-        logging.info("Cart page title:-", browser.title)
         subtotal_amount_table = browser.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/table')
         print(subtotal_amount_table.text)
     except Exception as e:
@@ -221,6 +221,9 @@ def order_details():
 
 try:
     # calling all the function as we needed:-
+    open_browser(url='https://qa10624.pamos.com/nationwide/'
+                 )
+
     age_and_email_pop_up()    #call the pop funtion
     # timer_thread = threading.Timer(14, close_email_popup)
     # timer_thread.start()
