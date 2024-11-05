@@ -1,11 +1,19 @@
 import logging
 import threading
 import time
+import urllib3
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
+
+
+
+http = urllib3.PoolManager(maxsize=10, block=True)
+
+# Alternatively
+pool = urllib3.HTTPConnectionPool("google.com", maxsize=15, block=True)
 
 # Set up logging:-
 logging.basicConfig(level=logging.INFO)
@@ -76,8 +84,8 @@ def add_to_cart():
         logging.info("Cart button clicked.")
         WebDriverWait(browser, 20).until(ec.title_contains("Cart - Pamos"))
         logging.info("Cart page title:-", browser.title)
-        subtotal_amount = browser.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/table/tbody/tr[1]/td/span/bdi')
-        logging.info("Cart Amount is:-", subtotal_amount.text)
+        subtotal_amount_table = browser.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/table')
+        print(subtotal_amount_table.text)
     except Exception as e:
         logging.error( "Failed to access the Cart page:",e )
 
@@ -174,7 +182,7 @@ def final_checkout(tc_card_number , tc_card_month , tc_card_year , tc_card_cvv):
                 option.click()
                 break
             i += 1
-        logging.info("card number filled", tc_card_month)
+        logging.info("Card number filled: {}".format(tc_card_month))
     except Exception as e:
         logging.error( "Not able to fill the card month...",e)
 
@@ -187,7 +195,7 @@ def final_checkout(tc_card_number , tc_card_month , tc_card_year , tc_card_cvv):
                 option.click()
                 break
             i += 1
-        logging.info("card number filled", tc_card_year)
+        logging.info("Card number filled: {}".format(tc_card_year))
     except Exception as e:
         logging.error( "Not able to fill the card Year...",e)
 
@@ -239,20 +247,20 @@ try:
     # fill billing details:-
     checkout_step_1(first_name = "Gautam",
                     last_name = "Jaswal",
-                    street_address="Village Mohali",
-                    city="Los Angeles",
-                    zip_code="82005",
-                    state="Wyoming",
-                    phone_number="3456789045",
-                    email="gautamtechmarocs@gmail.com")
+                    street_address= "Village Mohali",
+                    city= "Los Angeles",
+                    zip_code= 82005,
+                    state= "Wyoming",
+                    phone_number= 3456789045,
+                    email= "gautamtechmarocs@gmail.com")
 
     checkout_step_2()
 
     # fill the form:-
-    final_checkout(tc_card_cvv="123",
-                   tc_card_year="2034",
-                   tc_card_month="Dec",
-                   tc_card_number="4111111111111111")
+    final_checkout(tc_card_cvv = 123,
+                   tc_card_year = 2034,
+                   tc_card_month = "Dec",
+                   tc_card_number = 4111111111111111)
 
     # order details:-
     order_details()
