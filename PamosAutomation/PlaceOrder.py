@@ -26,28 +26,24 @@ def final_checkout(browser , time , By , logging , WebDriverWait , ec, tc_card_n
 
     try:
         card_month.find_elements(By.TAG_NAME, "option")
-        i = 0
-        for option in card_year.find_elements(By.TAG_NAME, "option"):
+        for option in card_month.find_elements(By.TAG_NAME, "option"):
             if option.text == tc_card_month:
                 browser.execute_script("arguments[0].scrollIntoView();", option)
                 option.click()
                 logging.info("Card Month filled...👍")
                 break
-            i += 1
 
     except Exception as e:
         logging.error( "Not able to fill the card month...",e)
 
     try:
         card_year.find_elements(By.TAG_NAME, "option")
-        i = 0
         for option in card_year.find_elements(By.TAG_NAME, "option"):
             if option.text == tc_card_year:
                 browser.execute_script("arguments[0].scrollIntoView();", option)
                 option.click()
                 logging.info("Card Year filled...👍")
                 break
-            i += 1
 
     except Exception as e:
         logging.error( "Not able to fill the card Year...",e)

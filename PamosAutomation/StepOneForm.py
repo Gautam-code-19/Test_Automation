@@ -25,13 +25,11 @@ def checkout_step_1(browser,By,time,logging,first_name, last_name, street_addres
         city_field.send_keys(city)
         zip_code_field.send_keys(zip_code)
         state_field.find_elements(By.TAG_NAME, "option")
-        i=0
         for option in state_field.find_elements(By.TAG_NAME, "option"):
             if option.text == state:
                 browser.execute_script("arguments[0].scrollIntoView();", option)
                 option.click()
                 break
-            i += 1
 
         phone_number_field.send_keys(phone_number)
         email_field.send_keys(email)
