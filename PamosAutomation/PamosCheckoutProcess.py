@@ -27,9 +27,7 @@ def open_browser(url):
     browser.get(url)
     logging.info("Login title :-- %s", browser.title)
 
-
-    # calling all the function as we needed:-
-
+# calling all the function as we needed:-
 try:
     open_browser(url='https://qa10624.pamos.com/nationwide/')
 
