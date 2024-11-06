@@ -1,15 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.ui import WebDriverWait
-import time
-import logging
-
-from Viewport import browser
-
-browser = webdriver.Chrome()
-
-def age_and_email_pop_up():
+def age_and_email_pop_up(browser,time,By,logging,WebDriverWait,ec):
 
     # Age verification pop-up:-
     try:
