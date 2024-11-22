@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.INFO)
 # Initialize the Chrome browser:-
 browser = webdriver.Chrome()
 
-# for further user
+# for future use
 def open_browser(url):
     browser.maximize_window()
     logging.info("---- Window maxed ----")
@@ -40,8 +40,8 @@ try:
     # fill billing details:-
     checkout_step_1(browser,By,time,logging,
                     first_name = "Gautam",
-                    last_name = "Jaswal",
-                    street_address= "Village Mohali",
+                    last_name = "Singh",
+                    street_address= "Village",
                     city= "Los Angeles",
                     zip_code= 82005,
                     state= "Wyoming",
